@@ -1,14 +1,15 @@
 {
   "name": "@nightnetwork/obscura",
-  "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "build": "esbuild src/index.ts --bundle --format=esm --platform=browser --outfile=dist/obscura.js",
+    "preview": "vite preview",
+    "format": "prettier --write ."
   },
   "devDependencies": {
+    "prettier": "^3.5.3",
     "typescript": "~5.8.3",
     "vite": "^6.3.5"
   },
@@ -25,10 +26,17 @@
     "cryptography",
     "cryptic"
   ],
-  "author": "amp and dust",
+  "author": "KDust7 & Amplify",
   "license": "AGPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/Night-Libs/Obscura/issues"
   },
-  "homepage": "https://github.com/Night-Libs/Obscura#readme"
+  "homepage": "https://github.com/Night-Libs/Obscura#readme",
+  "dependencies": {
+    "@types/node": "^22.15.18",
+    "esbuild": "^0.25.4",
+    "rimraf": "^6.0.1",
+    "tsx": "^4.19.4",
+    "uuid": "^11.1.0"
+  }
 }
