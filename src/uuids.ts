@@ -3,7 +3,7 @@ class CryptoUtils {
 
   static encodeToUUIDs(input: string): string[] {
     const length = input.length;
-    const lengthHex = length.toString(16).padStart(4, "0"); // 2 bytes = 4 hex chars
+    const lengthHex = length.toString(16).padStart(4, "0");
     const inputHex = Array.from(input)
       .map((char) => char.charCodeAt(0).toString(16).padStart(2, "0"))
       .join("");
@@ -12,7 +12,7 @@ class CryptoUtils {
     const chunks = fullHex.match(/.{1,32}/g) || [];
 
     return chunks.map((chunk) => {
-      const padded = chunk.padEnd(32, "0"); // pad with zeroes to 16 bytes
+      const padded = chunk.padEnd(32, "0");
       return [
         padded.slice(0, 8),
         padded.slice(8, 12),
@@ -28,9 +28,9 @@ class CryptoUtils {
       const hexChunks = uuids.map((uuid) => uuid.replace(/-/g, "").toLowerCase());
       const fullHex = hexChunks.join("");
 
-      const lengthHex = fullHex.slice(0, 4); // First 2 bytes = length
+      const lengthHex = fullHex.slice(0, 4);
       const dataLength = parseInt(lengthHex, 16);
-      const hexData = fullHex.slice(4, 4 + dataLength * 2); // only decode real content
+      const hexData = fullHex.slice(4, 4 + dataLength * 2);
 
       let result = "";
       for (let i = 0; i < hexData.length; i += 2) {

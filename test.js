@@ -6,18 +6,7 @@ const k = ob.keyGen(8);
 
 console.log("key:", k);
 
-const message = "Hello, world!";
-
-const encoded = ob.xor.encode(message, k);
-const decoded = ob.xor.decode(encoded, k);
-
-console.log("encoded:", encoded);  // ✅ "Hello, world!"
-console.log("decoded:", decoded);  // ✅ "Hello, world!"
-
-console.log("XOR OK?", decoded === message);  // ✅ true
-
-
-const data = "Hello, world!";
+const data = "https://google.com";
 
 const encrypted = ob.encode(data, k);
 

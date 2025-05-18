@@ -4,15 +4,27 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "esbuild src/index.ts --bundle --format=esm --platform=browser --outfile=dist/obscura.js",
+    "build": "npm run build:types && npm run build:js",
+    "build:js": "esbuild src/index.ts --bundle --format=esm --minify-syntax --platform=browser --outfile=dist/obscura.js",
+    "build:types": "tsc --emitDeclarationOnly",
     "preview": "vite preview",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "prepublishOnly": "npm run clean && npm run format && npm run build"
   },
   "devDependencies": {
     "prettier": "^3.5.3",
     "typescript": "~5.8.3",
     "vite": "^6.3.5"
   },
+  "exports": {
+    ".": {
+      "import": "./dist/obscura.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist/"
+  ],
   "description": "The next-level encoding tool.",
   "main": "index.js",
   "repository": {
@@ -38,5 +50,6 @@
     "rimraf": "^6.0.1",
     "tsx": "^4.19.4",
     "uuid": "^11.1.0"
-  }
+  },
+  "types": "./dist/index.d.ts"
 }
