@@ -1,4 +1,4 @@
-class CryptoUtils {
+/* class CryptoUtils {
   constructor() {}
 
   static encodeToUUIDs(input: string): string[] {
@@ -48,3 +48,44 @@ class CryptoUtils {
 
 export default CryptoUtils;
 export { CryptoUtils };
+*/
+// the links will get way too long way too fast!! reimplemented below
+import { v4 as uuidv4 } from "uuid";
+import { v5 as uuidv5 } from "uuid";
+import { sha256 } from "./hash";
+
+// Type definition shim for environments lacking `localStorage`
+let localStorage: Storage;
+
+if (typeof window === "undefined" || typeof window.localStorage === "undefined") {
+  
+  const { LocalStorage } = await import("node-localstorage");
+  localStorage = new LocalStorage("./scratch");
+} else {
+  
+  localStorage = window.localStorage;
+}
+
+export function initMaster(): string {
+  const existing = localStorage.getItem("masterUUID");
+  if (existing) return existing;
+
+  const newUUID = uuidv4();
+  localStorage.setItem("masterUUID", newUUID);
+  return newUUID;
+}
+
+export async function namespace(initialKeyHash: Uint8Array, master: string): Promise<Uint8Array> {
+  const masterBytes = new TextEncoder().encode(master);
+  const combined = new Uint8Array(initialKeyHash.length + masterBytes.length);
+  combined.set(initialKeyHash);
+  combined.set(masterBytes, initialKeyHash.length);
+
+
+  const hash = await sha256(combined);
+  return hash.slice(0, 16); 
+}
+
+export function convertFinal(xor: string, NAMESPACE: Uint8Array<ArrayBufferLike>): string {
+  return uuidv5(xor, NAMESPACE);
+}
