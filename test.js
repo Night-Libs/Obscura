@@ -1,27 +1,24 @@
 import { Obscura } from "./dist/obscura.js"; // import obscura client
 
-const ob = new Obscura(); // create new obscura instance
-console.log("Created new Obscura")
-// this is usage pay fucking attention
-// so i wanted to make this super customizable so theres a bunch of stuff we have to do before using
-// if need be we can generate a passphrase, or use our own
-const passphrase_ = ob.genPassphrase(8) // parameter is the length of the passphrase
-console.log("Created new passphase")
-// or
-// const passphrase_ = i_love_kids
-// then, create a key/hash using the passphrase
-const key = await ob.keyGen(passphrase_)
-console.log("created new key hash")
-// next, create the cipher
-console.log("creating cipher.. this will take a while.")
-const shuffle = ob.ob_shuffle(key)
-console.log("created cipher")
-// yes
-// after this, we create our master
-const master = ob.setMaster()
-console.log("Master is set")
-// then we can encode
-const string = 'this is an encoded uuid (i love touching kids)'
-const encoded = await ob.encode(string, key, shuffle, master, passphrase_)
-console.log("Encoded")
-console.log(encoded)
+(async () => {
+
+  const passphrase = Obscura.genPassphrase(8);
+  console.log("Generated passphrase:", passphrase);
+
+  const ob = new Obscura(passphrase);
+  console.log("Created new Obscura instance");
+
+  // should we stick to ts init or should we make it more manual but customizable where the user has to manually run these functions? (this could make it so that the user could further encrypt/shuffle a random amount of times.. tho will need sm1's opinion on ts)
+  console.log("Initializing (key derivation + map build) …");
+  await ob.init();
+  console.log("Initialization complete");
+
+  const input = "this is an encoded uuid";
+  console.log("Encoding input:", input);
+  const uuid = await ob.encode(input);
+  console.log("Encoded UUID:", uuid);
+
+  console.log("Decoding back …");
+  const result = await ob.decode(uuid);
+  console.log("Decoded:", result);
+})();
