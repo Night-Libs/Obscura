@@ -124,8 +124,10 @@ In a terminal/node environment, and a browser environment.
 To test Obscura in a terminal/node environment, you may run the `test.ts` file in the `tests` folder using `bun tests/test.ts --watch`. Any changes made to the testing file will automatically be reflected in the terminal.
 
 To test Obscura in a browser environment, the steps are extremely different.
+
 > [!IMPORTANT]
 > This is assuming we have not published Obscura to npm yet, and are using the local version of Obscura. If you have published Obscura to npm, you can skip the first few steps and just install it via npm.
+
 First, build Obscura by running `bun run build` in the root directory.
 Next, run `npm pack` to pack the Obscura library.
 After that, run `cd tests/templates` to change directory to our browser testing environement.
