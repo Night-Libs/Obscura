@@ -1,41 +1,53 @@
 # Obscura
 
-Obscura is a JavaScript library written in TypeScript allowing you to encode and decode strings into UUIDs. Obscura is designed to be simple and easy to use, while also being powerful and flexible. 
+Obscura is a JavaScript library written in TypeScript allowing you to encode and decode strings into UUIDs. Obscura is designed to be simple and easy to use, while also being powerful and flexible.
 Obscura is not a cryptographic library, and should not be used for security purposes. It is designed for obfuscation and encoding, not encryption. The decryption key necessary to decode a UUID back to its original form is included in localStorage for now. This may change in the future, but the decryption key must be stored somewhere as a UUID is non-reversible.
+
 > [!CAUTION]
 > Do not attempt to use Obscura for security purposes. It is not designed for that, and will not work as expected. Obscura is designed for obfuscation and encoding, not encryption. Do not use Obscura to store sensitive information, as it is not secure.
 
 # Installation
+
 > [!TIP]
 > It might be easier to use Obscura with a bundler, such as Vite, Webpack, or Parcel. This will allow you to use Obscura in a browser environment without having to worry about the complexities of bundling and transpiling your code. If you are using a bundler, you can simply import Obscura as a module and use it in your code.
+
 ## Bundler
+
 All you need to do to use Obscura in a bundler environment is to install it via npm or yarn, and then import it into your code.
 
 ```javascript
-import { Obscura } from '@nightnetwork/obscura';
+import { Obscura } from "@nightnetwork/obscura";
 ```
+
 ## Static
+
 To use Obscura in a static environment, you'll need to clone the Obscura git repo.
 
 Open your terminal.
 
 Start by cloning the repo:
+
 ```bash
 git clone https://github.com/Night-Libs/Obscura.git
 ```
+
 Then, change your current working directory to be the newly created directory `Obscura` (this might change based on the config you provided the clone command)
+
 ```bash
 cd Obscura
 ```
+
 Next, install `bun` for your machine if you haven't already. You can find the installation instructions on [Bun's official website](https://bun.sh).
 If you have just freshly installed bun, restart your terminal and renavigate to the Obscura folder.
 
 Next, install the dependencies required by Obscura by running:
+
 ```bash
 bun i
 ```
 
 After that, build Obscura by running:
+
 ```bash
 bun run build
 ```
@@ -47,15 +59,13 @@ You can now use Obscura in your static environment by including the `obscura.js`
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Obscura Example</title>
     <script src="path/to/obscura.js"></script>
-</head>
-<body>
-  
-</body>
+  </head>
+  <body></body>
 </html>
 ```
 
@@ -66,21 +76,22 @@ You can now use Obscura in your static environment by including the `obscura.js`
 
 In this section, we are assuming we are using a bundler. The instructions are the same for initializing Obscura in a static environment, but you will need to include the `obscura.js` file in your HTML file as described above.
 
-Firstly, we need to create an instance of Obscura. 
+Firstly, we need to create an instance of Obscura.
 
-Obscura requires a `passphrase` to be passed in the constructor. 
-You can use your own, or generate a random one using `Obscura.genPassphrase(8)`. You may replace `8` with any number you want, but it is recommended to use a length greater than or equal to `8` for security purposes. The number is the character length of your passphrase. 
+Obscura requires a `passphrase` to be passed in the constructor.
+You can use your own, or generate a random one using `Obscura.genPassphrase(8)`. You may replace `8` with any number you want, but it is recommended to use a length greater than or equal to `8` for security purposes. The number is the character length of your passphrase.
 
 Obscura uses ESM syntax. Keep that in mind when importing it without a bundler.
 
-The below examples assume you are importing Obscura as `Obscura`, and not a custom name. 
+The below examples assume you are importing Obscura as `Obscura`, and not a custom name.
 
 Now that we have our passphrase, we need to initialize the Obscura class.
 
 ```javascript
 // assumes passphrase is a variable containing either your generated passphrase or your custom one
-const obscura = new Obscura(passphrase)
+const obscura = new Obscura(passphrase);
 ```
+
 > [!IMPORTANT]
 > The following step is prone to change; please check the Obscura documentation in case the following method changes in a future update.
 
@@ -88,8 +99,9 @@ Next, we need to initialize core values needed for Obscura to work. In this vers
 
 ```javascript
 // assumes obscura is the instance of Obscura we created earlier
-await obscura.init()
+await obscura.init();
 ```
+
 > [!WARNING]
 > All of Obscura's methods are asynchronous, so you will need to use `await` when calling them. If you are not using `await`, you will need to use `.then()` to handle the promise returned by the method.
 
@@ -97,11 +109,9 @@ Finally, we can use the .encode and .decode methods to encode and decode strings
 
 ```javascript
 // assmues input is a string containing the string we want to encode and uuid is the string containing the uuid we want to decode.
-const uuid = await obscura.encode(input)
-const decoded = await obscura.decode(uuid)
+const uuid = await obscura.encode(input);
+const decoded = await obscura.decode(uuid);
 ```
-
-
 
 Available as @nightnetwork/obscura on npm.
 
@@ -113,8 +123,8 @@ Follow the installation steps for your machine to install Bun at [their official
 
 Once installed, restart your terminal.
 
-
 # Testing
+
 This is very important!
 Make sure to follow all steps to properly test Obscura.
 

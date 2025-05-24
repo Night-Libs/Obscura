@@ -1,6 +1,5 @@
 import path from "path";
 
-
 const dir = path.join(import.meta.dir, "templates/dist");
 
 const server = Bun.serve({
@@ -14,7 +13,9 @@ const server = Bun.serve({
       if (await file.exists()) {
         return new Response(file);
       }
-      return new Response("We couldn't find the file you were expecting.", { status: 404 });
+      return new Response("We couldn't find the file you were expecting.", {
+        status: 404,
+      });
     } catch (e) {
       return new Response("shit an error occured: " + e, { status: 500 });
     }

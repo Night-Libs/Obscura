@@ -1,6 +1,5 @@
-import { Obscura } from "obscura"
+import { Obscura } from "obscura";
 (async () => {
-
   const passphrase = Obscura.genPassphrase(8);
   console.log("Generated passphrase:", passphrase);
 

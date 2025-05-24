@@ -53,38 +53,34 @@ export { CryptoUtils };
 import { v4 as uuidv4 } from "uuid";
 import { v5 as uuidv5 } from "uuid";
 import { sha256 } from "./hash";
+import { IDBStore } from "./idbStore";
 
-// Remove top-level await for browser compatibility
-let localStorage: Storage;
-if (typeof window === "undefined" || typeof window.localStorage === "undefined") {
-  // Node.js environment: only require node-localstorage when needed
-  // Use a sync require to avoid top-level await
-  const LocalStorage = require("node-localstorage").LocalStorage;
-  localStorage = new LocalStorage("./scratch");
-} else {
-  localStorage = window.localStorage;
-}
+const idb = new IDBStore("obscura", "obscura");
 
-export function initMaster(): string {
-  const existing = localStorage.getItem("masterUUID");
+export async function initMaster(): Promise<string> {
+  const existing = await idb.getItem<string>("masterUUID");
   if (existing) return existing;
-
   const newUUID = uuidv4();
-  localStorage.setItem("masterUUID", newUUID);
+  await idb.setItem("masterUUID", newUUID);
   return newUUID;
 }
 
-export async function namespace(initialKeyHash: Uint8Array, master: string): Promise<Uint8Array> {
+export async function namespace(
+  initialKeyHash: Uint8Array,
+  master: string,
+): Promise<Uint8Array> {
   const masterBytes = new TextEncoder().encode(master);
   const combined = new Uint8Array(initialKeyHash.length + masterBytes.length);
   combined.set(initialKeyHash);
   combined.set(masterBytes, initialKeyHash.length);
 
-
   const hash = await sha256(combined);
-  return hash.slice(0, 16); 
+  return hash.slice(0, 16);
 }
 
-export function convertFinal(xor: string, NAMESPACE: Uint8Array<ArrayBufferLike>): string {
+export function convertFinal(
+  xor: string,
+  NAMESPACE: Uint8Array<ArrayBufferLike>,
+): string {
   return uuidv5(xor, NAMESPACE);
 }
