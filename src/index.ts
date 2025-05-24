@@ -1,13 +1,15 @@
-
 import { shuffle, apply } from "./cipher";
 import { deriveKey, sha256 } from "./hash";
 import { uuidToBytes } from "./helpers";
 import { namespace, initMaster, convertFinal } from "./uuids";
 import { xorEncode, xorDecode } from "./xor";
 
+// Remove top-level await for browser compatibility
 let localStorage: Storage;
 if (typeof window === "undefined" || typeof window.localStorage === "undefined") {
-  const { LocalStorage } = await import("node-localstorage");
+  // Node.js environment: only require node-localstorage when needed
+  // Use a sync require to avoid top-level await
+  const LocalStorage = require("node-localstorage").LocalStorage;
   localStorage = new LocalStorage("./scratch");
 } else {
   localStorage = window.localStorage;

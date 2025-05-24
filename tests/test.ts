@@ -1,5 +1,4 @@
-import { Obscura } from "./dist/obscura.js"; // import obscura client
-
+import { Obscura } from "obscura"
 (async () => {
 
   const passphrase = Obscura.genPassphrase(8);

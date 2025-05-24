@@ -54,15 +54,14 @@ import { v4 as uuidv4 } from "uuid";
 import { v5 as uuidv5 } from "uuid";
 import { sha256 } from "./hash";
 
-// Type definition shim for environments lacking `localStorage`
+// Remove top-level await for browser compatibility
 let localStorage: Storage;
-
 if (typeof window === "undefined" || typeof window.localStorage === "undefined") {
-  
-  const { LocalStorage } = await import("node-localstorage");
+  // Node.js environment: only require node-localstorage when needed
+  // Use a sync require to avoid top-level await
+  const LocalStorage = require("node-localstorage").LocalStorage;
   localStorage = new LocalStorage("./scratch");
 } else {
-  
   localStorage = window.localStorage;
 }
 

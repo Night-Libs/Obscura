@@ -1,0 +1,6 @@
+{
+  "extends": "../tsconfig.test.json",
+}
+// ok this might seem dumb, why not just move the tsconfig.test.json to the test folder?
+// it's because the tsconfig.test.json upon merging is not correctly mapping the dist folder..
+// so for now we are just extneding the tsconfig.test.json in the root folder

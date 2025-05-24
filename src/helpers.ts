@@ -17,3 +17,4 @@ export function uuidToBytes(uuid: string): Uint8Array {
   return bytes;
 }
 // this is for other functions too trust trust (that can't be categorized)
+// mostly conversions

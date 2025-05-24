@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@nightnetwork/obscura": "file:../nightnetwork-obscura-1.0.0.tgz"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["tests"],
+  "compilerOptions": {
+    "paths": {
+      "obscura": ["./dist/obscura", "./dist/obscura.d.ts"]
+    }
+  }
+}
